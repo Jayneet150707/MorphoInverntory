@@ -1,0 +1,39 @@
+@model MorphoInventoryUI.Models.AcceptReturnViewModel
+
+@{
+    ViewData["Title"] = "Accept Return Request";
+}
+
+<div class="row">
+    <div class="col-md-8 offset-md-2">
+        <div class="card">
+            <div class="card-header bg-success text-white">
+                <h4 class="mb-0">Accept Return Request #@Model.ReturnRequestId</h4>
+            </div>
+            <div class="card-body">
+                <form asp-action="Accept" method="post">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    
+                    <input type="hidden" asp-for="ReturnRequestId" />
+                    
+                    <div class="mb-3">
+                        <label asp-for="Remarks" class="form-label"></label>
+                        <textarea asp-for="Remarks" class="form-control" rows="3"></textarea>
+                        <span asp-validation-for="Remarks" class="text-danger"></span>
+                        <div class="form-text">Please provide remarks about the condition of the returned device.</div>
+                    </div>
+                    
+                    <div class="d-flex justify-content-between">
+                        <a asp-action="Details" asp-route-id="@Model.ReturnRequestId" class="btn btn-secondary">Back to Details</a>
+                        <button type="submit" class="btn btn-success">Accept Return</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+

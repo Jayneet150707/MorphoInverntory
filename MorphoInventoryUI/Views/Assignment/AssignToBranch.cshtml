@@ -1,0 +1,84 @@
+@model MorphoInventoryUI.Models.AssignDeviceToBranchViewModel
+
+@{
+    ViewData["Title"] = "Assign to Branch";
+}
+
+<div class="row">
+    <div class="col-md-8 offset-md-2">
+        <div class="card">
+            <div class="card-header bg-success text-white">
+                <h4 class="mb-0">Assign Device to Branch</h4>
+            </div>
+            <div class="card-body">
+                <form asp-action="AssignToBranch" method="post" enctype="multipart/form-data">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    
+                    <div class="mb-3">
+                        <label asp-for="SerialNumber" class="form-label"></label>
+                        <input asp-for="SerialNumber" class="form-control" value="@(Context.Request.Query["serialNumber"])" />
+                        <span asp-validation-for="SerialNumber" class="text-danger"></span>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label asp-for="Creator" class="form-label"></label>
+                        <input asp-for="Creator" class="form-control" />
+                        <span asp-validation-for="Creator" class="text-danger"></span>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label asp-for="Branch" class="form-label"></label>
+                        <select asp-for="Branch" class="form-select" asp-items="ViewBag.Branches" id="branchSelect">
+                            <option value="">-- Select Branch --</option>
+                        </select>
+                        <span asp-validation-for="Branch" class="text-danger"></span>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label asp-for="CsoId" class="form-label"></label>
+                        <select asp-for="CsoId" class="form-select" asp-items="ViewBag.CsoIds">
+                            <option value="">-- Select CSO ID --</option>
+                        </select>
+                        <span asp-validation-for="CsoId" class="text-danger"></span>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label asp-for="DeviceImageFile" class="form-label"></label>
+                        <input asp-for="DeviceImageFile" class="form-control" type="file" accept="image/*" />
+                        <span asp-validation-for="DeviceImageFile" class="text-danger"></span>
+                    </div>
+                    
+                    <div class="d-flex justify-content-between">
+                        <a asp-action="Index" class="btn btn-secondary">Back to List</a>
+                        <button type="submit" class="btn btn-success">Assign Device</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    
+    <script>
+        // Auto-update CSO ID when branch is selected
+        $(document).ready(function() {
+            $('#branchSelect').change(function() {
+                var selectedBranch = $(this).val();
+                $('#CsoId').val('').find('option').hide();
+                $('#CsoId').find('option:first').show();
+                $('#CsoId').find('option[value=""]').show();
+                
+                if (selectedBranch) {
+                    $('#CsoId').find('option').each(function() {
+                        if ($(this).text().indexOf(selectedBranch) >= 0) {
+                            $(this).show();
+                        }
+                    });
+                }
+            });
+        });
+    </script>
+}
+

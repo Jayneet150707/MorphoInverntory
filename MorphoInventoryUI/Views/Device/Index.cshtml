@@ -1,0 +1,72 @@
+@model IEnumerable<MorphoInventoryUI.Models.Device>
+
+@{
+    ViewData["Title"] = "Devices";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h1>Device Inventory</h1>
+    <div>
+        <a asp-action="Create" class="btn btn-primary me-2">Add Device</a>
+        <a asp-action="BulkUpload" class="btn btn-success">Bulk Upload</a>
+    </div>
+</div>
+
+<div class="mb-4">
+    <div class="btn-group" role="group">
+        <a asp-action="Index" class="btn btn-outline-primary">All Devices</a>
+        <a asp-action="Available" class="btn btn-outline-primary">Available Devices</a>
+    </div>
+</div>
+
+@if (!Model.Any())
+{
+    <div class="alert alert-info">
+        No devices found.
+    </div>
+}
+else
+{
+    <div class="table-responsive">
+        <table class="table table-striped table-hover">
+            <thead class="table-dark">
+                <tr>
+                    <th>@Html.DisplayNameFor(model => model.SerialNumber)</th>
+                    <th>@Html.DisplayNameFor(model => model.Company)</th>
+                    <th>@Html.DisplayNameFor(model => model.DeviceType)</th>
+                    <th>@Html.DisplayNameFor(model => model.Status)</th>
+                    <th>@Html.DisplayNameFor(model => model.CurrentLocation)</th>
+                    <th>@Html.DisplayNameFor(model => model.CreatedDate)</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@Html.DisplayFor(modelItem => item.SerialNumber)</td>
+                        <td>@Html.DisplayFor(modelItem => item.Company)</td>
+                        <td>@Html.DisplayFor(modelItem => item.DeviceType)</td>
+                        <td>
+                            <span class="badge @(item.Status == "Available" ? "bg-success" : item.Status == "Assigned" ? "bg-primary" : "bg-secondary")">
+                                @Html.DisplayFor(modelItem => item.Status)
+                            </span>
+                        </td>
+                        <td>@Html.DisplayFor(modelItem => item.CurrentLocation)</td>
+                        <td>@Html.DisplayFor(modelItem => item.CreatedDate)</td>
+                        <td>
+                            <div class="btn-group" role="group">
+                                <a asp-action="Details" asp-route-id="@item.SerialNumber" class="btn btn-sm btn-info">Details</a>
+                                @if (item.Status == "Available")
+                                {
+                                    <a asp-controller="Assignment" asp-action="AssignToCoordinator" asp-route-serialNumber="@item.SerialNumber" class="btn btn-sm btn-primary">Assign</a>
+                                }
+                            </div>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+}
+

@@ -1,0 +1,88 @@
+@model MorphoInventoryUI.Models.DeviceAssignment
+
+@{
+    ViewData["Title"] = "Assignment Details";
+}
+
+<div class="row">
+    <div class="col-md-8 offset-md-2">
+        <div class="card">
+            <div class="card-header bg-info text-white d-flex justify-content-between align-items-center">
+                <h4 class="mb-0">Assignment Details</h4>
+                <span class="badge @(Model.Status == "Active" ? "bg-success" : "bg-secondary")">
+                    @Html.DisplayFor(model => model.Status)
+                </span>
+            </div>
+            <div class="card-body">
+                <div class="row mb-3">
+                    <div class="col-md-4 fw-bold">@Html.DisplayNameFor(model => model.SerialNumber)</div>
+                    <div class="col-md-8">@Html.DisplayFor(model => model.SerialNumber)</div>
+                </div>
+                
+                <div class="row mb-3">
+                    <div class="col-md-4 fw-bold">@Html.DisplayNameFor(model => model.Company)</div>
+                    <div class="col-md-8">@Html.DisplayFor(model => model.Company)</div>
+                </div>
+                
+                <div class="row mb-3">
+                    <div class="col-md-4 fw-bold">@Html.DisplayNameFor(model => model.DeviceType)</div>
+                    <div class="col-md-8">@Html.DisplayFor(model => model.DeviceType)</div>
+                </div>
+                
+                <div class="row mb-3">
+                    <div class="col-md-4 fw-bold">@Html.DisplayNameFor(model => model.AssignedTo)</div>
+                    <div class="col-md-8">@Html.DisplayFor(model => model.AssignedTo)</div>
+                </div>
+                
+                @if (!string.IsNullOrEmpty(Model.Branch))
+                {
+                    <div class="row mb-3">
+                        <div class="col-md-4 fw-bold">@Html.DisplayNameFor(model => model.Creator)</div>
+                        <div class="col-md-8">@Html.DisplayFor(model => model.Creator)</div>
+                    </div>
+                    
+                    <div class="row mb-3">
+                        <div class="col-md-4 fw-bold">@Html.DisplayNameFor(model => model.Branch)</div>
+                        <div class="col-md-8">@Html.DisplayFor(model => model.Branch)</div>
+                    </div>
+                    
+                    <div class="row mb-3">
+                        <div class="col-md-4 fw-bold">@Html.DisplayNameFor(model => model.CsoId)</div>
+                        <div class="col-md-8">@Html.DisplayFor(model => model.CsoId)</div>
+                    </div>
+                }
+                
+                <div class="row mb-3">
+                    <div class="col-md-4 fw-bold">@Html.DisplayNameFor(model => model.AssignmentDate)</div>
+                    <div class="col-md-8">@Html.DisplayFor(model => model.AssignmentDate)</div>
+                </div>
+                
+                @if (!string.IsNullOrEmpty(Model.DeviceImage))
+                {
+                    <div class="row mb-3">
+                        <div class="col-md-4 fw-bold">@Html.DisplayNameFor(model => model.DeviceImage)</div>
+                        <div class="col-md-8">
+                            <img src="data:image/jpeg;base64,@Model.DeviceImage" alt="Device Image" class="img-fluid img-thumbnail" style="max-height: 300px;" />
+                        </div>
+                    </div>
+                }
+                
+                <div class="d-flex justify-content-between mt-4">
+                    <a asp-action="Index" class="btn btn-secondary">Back to List</a>
+                    
+                    <div>
+                        @if (Model.Status == "Active" && string.IsNullOrEmpty(Model.Branch))
+                        {
+                            <a asp-action="AssignToBranch" asp-route-serialNumber="@Model.SerialNumber" class="btn btn-success">Assign to Branch</a>
+                        }
+                        @if (Model.Status == "Active" && !string.IsNullOrEmpty(Model.Branch))
+                        {
+                            <a asp-controller="Return" asp-action="Create" asp-route-serialNumber="@Model.SerialNumber" class="btn btn-warning">Return Device</a>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

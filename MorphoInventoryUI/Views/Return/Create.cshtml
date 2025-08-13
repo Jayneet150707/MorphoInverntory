@@ -1,0 +1,63 @@
+@model MorphoInventoryUI.Models.DeviceReturnRequestViewModel
+
+@{
+    ViewData["Title"] = "Create Return Request";
+}
+
+<div class="row">
+    <div class="col-md-8 offset-md-2">
+        <div class="card">
+            <div class="card-header bg-warning text-dark">
+                <h4 class="mb-0">Create Return Request</h4>
+            </div>
+            <div class="card-body">
+                <form asp-action="Create" method="post" enctype="multipart/form-data">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    
+                    <div class="mb-3">
+                        <label asp-for="SerialNumber" class="form-label"></label>
+                        <input asp-for="SerialNumber" class="form-control" value="@(Context.Request.Query["serialNumber"])" />
+                        <span asp-validation-for="SerialNumber" class="text-danger"></span>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label asp-for="CsoId" class="form-label"></label>
+                        <input asp-for="CsoId" class="form-control" />
+                        <span asp-validation-for="CsoId" class="text-danger"></span>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label asp-for="IssueType" class="form-label"></label>
+                        <select asp-for="IssueType" class="form-select" asp-items="ViewBag.IssueTypes">
+                            <option value="">-- Select Issue Type --</option>
+                        </select>
+                        <span asp-validation-for="IssueType" class="text-danger"></span>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label asp-for="DeviceImageFile" class="form-label"></label>
+                        <input asp-for="DeviceImageFile" class="form-control" type="file" accept="image/*" />
+                        <span asp-validation-for="DeviceImageFile" class="text-danger"></span>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label asp-for="Remarks" class="form-label"></label>
+                        <textarea asp-for="Remarks" class="form-control" rows="3"></textarea>
+                        <span asp-validation-for="Remarks" class="text-danger"></span>
+                        <div class="form-text">Please provide detailed information about the issue.</div>
+                    </div>
+                    
+                    <div class="d-flex justify-content-between">
+                        <a asp-action="Index" class="btn btn-secondary">Back to List</a>
+                        <button type="submit" class="btn btn-warning">Submit Return Request</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+

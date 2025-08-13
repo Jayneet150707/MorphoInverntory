@@ -1,0 +1,44 @@
+@model MorphoInventoryUI.Models.AssignDeviceToCoordinatorViewModel
+
+@{
+    ViewData["Title"] = "Assign to Coordinator";
+}
+
+<div class="row">
+    <div class="col-md-8 offset-md-2">
+        <div class="card">
+            <div class="card-header bg-primary text-white">
+                <h4 class="mb-0">Assign Device to Coordinator</h4>
+            </div>
+            <div class="card-body">
+                <form asp-action="AssignToCoordinator" method="post">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    
+                    <div class="mb-3">
+                        <label asp-for="SerialNumber" class="form-label"></label>
+                        <input asp-for="SerialNumber" class="form-control" value="@(Context.Request.Query["serialNumber"])" />
+                        <span asp-validation-for="SerialNumber" class="text-danger"></span>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label asp-for="AssignedTo" class="form-label"></label>
+                        <select asp-for="AssignedTo" class="form-select" asp-items="ViewBag.Coordinators">
+                            <option value="">-- Select Coordinator --</option>
+                        </select>
+                        <span asp-validation-for="AssignedTo" class="text-danger"></span>
+                    </div>
+                    
+                    <div class="d-flex justify-content-between">
+                        <a asp-action="Index" class="btn btn-secondary">Back to List</a>
+                        <button type="submit" class="btn btn-primary">Assign Device</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+
