@@ -1,0 +1,38 @@
+@{
+    ViewData["Title"] = "Update Order Status";
+    var orderId = ViewBag.OrderId;
+    var currentStatus = ViewBag.CurrentStatus;
+}
+
+<div class="row">
+    <div class="col-md-8 offset-md-2">
+        <div class="card">
+            <div class="card-header bg-primary text-white">
+                <h4 class="mb-0">Update Order #@orderId Status</h4>
+            </div>
+            <div class="card-body">
+                <form asp-action="UpdateStatus" method="post">
+                    <div class="mb-3">
+                        <label class="form-label">Current Status</label>
+                        <input type="text" class="form-control" value="@currentStatus" readonly />
+                    </div>
+                    
+                    <input type="hidden" name="orderId" value="@orderId" />
+                    
+                    <div class="mb-3">
+                        <label class="form-label">New Status</label>
+                        <select name="status" class="form-select" asp-items="ViewBag.Statuses" required>
+                            <option value="">-- Select New Status --</option>
+                        </select>
+                    </div>
+                    
+                    <div class="d-flex justify-content-between">
+                        <a asp-action="Details" asp-route-id="@orderId" class="btn btn-secondary">Back to Details</a>
+                        <button type="submit" class="btn btn-primary">Update Status</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+

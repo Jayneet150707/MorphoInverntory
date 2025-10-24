@@ -1,0 +1,106 @@
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Morpho Inventory Management System</h1>
+    <p>A comprehensive system for managing Morpho device inventory, procurement, assignment, and returns.</p>
+</div>
+
+<div class="row mt-4">
+    <div class="col-md-6 col-lg-3 mb-4">
+        <div class="card h-100">
+            <div class="card-header bg-primary text-white">
+                <h5 class="card-title mb-0">Device Management</h5>
+            </div>
+            <div class="card-body">
+                <p class="card-text">Manage device inventory, add new devices, and view device details.</p>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item"><a asp-controller="Device" asp-action="Index">View All Devices</a></li>
+                    <li class="list-group-item"><a asp-controller="Device" asp-action="Available">View Available Devices</a></li>
+                    <li class="list-group-item"><a asp-controller="Device" asp-action="Create">Add New Device</a></li>
+                    <li class="list-group-item"><a asp-controller="Device" asp-action="BulkUpload">Bulk Upload Devices</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-6 col-lg-3 mb-4">
+        <div class="card h-100">
+            <div class="card-header bg-success text-white">
+                <h5 class="card-title mb-0">Order Management</h5>
+            </div>
+            <div class="card-body">
+                <p class="card-text">Create and manage device order requests.</p>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item"><a asp-controller="Order" asp-action="Index">View All Orders</a></li>
+                    <li class="list-group-item"><a asp-controller="Order" asp-action="Pending">View Pending Orders</a></li>
+                    <li class="list-group-item"><a asp-controller="Order" asp-action="Approved">View Approved Orders</a></li>
+                    <li class="list-group-item"><a asp-controller="Order" asp-action="Create">Create New Order</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-6 col-lg-3 mb-4">
+        <div class="card h-100">
+            <div class="card-header bg-info text-white">
+                <h5 class="card-title mb-0">Assignment Management</h5>
+            </div>
+            <div class="card-body">
+                <p class="card-text">Assign devices to coordinators and branches.</p>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item"><a asp-controller="Assignment" asp-action="Index">View All Assignments</a></li>
+                    <li class="list-group-item"><a asp-controller="Assignment" asp-action="AssignToCoordinator">Assign to Coordinator</a></li>
+                    <li class="list-group-item"><a asp-controller="Assignment" asp-action="AssignToBranch">Assign to Branch</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-6 col-lg-3 mb-4">
+        <div class="card h-100">
+            <div class="card-header bg-warning text-dark">
+                <h5 class="card-title mb-0">Return Management</h5>
+            </div>
+            <div class="card-body">
+                <p class="card-text">Process device return requests.</p>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item"><a asp-controller="Return" asp-action="Index">View All Returns</a></li>
+                    <li class="list-group-item"><a asp-controller="Return" asp-action="Pending">View Pending Returns</a></li>
+                    <li class="list-group-item"><a asp-controller="Return" asp-action="Create">Create Return Request</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row mt-4">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header bg-secondary text-white">
+                <h5 class="card-title mb-0">Workflow Overview</h5>
+            </div>
+            <div class="card-body">
+                <h6>Device Procurement Process</h6>
+                <ol>
+                    <li>VP initiates device order with branch details</li>
+                    <li>Coordinator reviews and forwards for approval</li>
+                    <li>EVP approves or rejects the request</li>
+                    <li>IT Support processes approved requests and places orders</li>
+                    <li>Devices are added to inventory</li>
+                    <li>Devices are assigned to coordinators</li>
+                    <li>Coordinators assign devices to branches</li>
+                </ol>
+
+                <h6>Device Return Process</h6>
+                <ol>
+                    <li>Branch initiates return request with issue details</li>
+                    <li>Head Office reviews and accepts the return</li>
+                    <li>Device is marked as available in inventory</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</div>
+

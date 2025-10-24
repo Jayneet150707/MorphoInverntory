@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Morpho Inventory</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/MorphoInventoryUI.styles.css" asp-append-version="true" />
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark bg-dark border-bottom box-shadow mb-3">
+            <div class="container-fluid">
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Morpho Inventory</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                    <ul class="navbar-nav flex-grow-1">
+                        <li class="nav-item">
+                            <a class="nav-link text-light" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle text-light" href="#" id="deviceDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Devices
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="deviceDropdown">
+                                <li><a class="dropdown-item" asp-controller="Device" asp-action="Index">All Devices</a></li>
+                                <li><a class="dropdown-item" asp-controller="Device" asp-action="Available">Available Devices</a></li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li><a class="dropdown-item" asp-controller="Device" asp-action="Create">Add Device</a></li>
+                                <li><a class="dropdown-item" asp-controller="Device" asp-action="BulkUpload">Bulk Upload</a></li>
+                            </ul>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle text-light" href="#" id="orderDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Orders
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="orderDropdown">
+                                <li><a class="dropdown-item" asp-controller="Order" asp-action="Index">All Orders</a></li>
+                                <li><a class="dropdown-item" asp-controller="Order" asp-action="Pending">Pending Orders</a></li>
+                                <li><a class="dropdown-item" asp-controller="Order" asp-action="Approved">Approved Orders</a></li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li><a class="dropdown-item" asp-controller="Order" asp-action="Create">Create Order</a></li>
+                            </ul>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle text-light" href="#" id="assignmentDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Assignments
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="assignmentDropdown">
+                                <li><a class="dropdown-item" asp-controller="Assignment" asp-action="Index">All Assignments</a></li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li><a class="dropdown-item" asp-controller="Assignment" asp-action="AssignToCoordinator">Assign to Coordinator</a></li>
+                                <li><a class="dropdown-item" asp-controller="Assignment" asp-action="AssignToBranch">Assign to Branch</a></li>
+                            </ul>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle text-light" href="#" id="returnDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Returns
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="returnDropdown">
+                                <li><a class="dropdown-item" asp-controller="Return" asp-action="Index">All Returns</a></li>
+                                <li><a class="dropdown-item" asp-controller="Return" asp-action="Pending">Pending Returns</a></li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li><a class="dropdown-item" asp-controller="Return" asp-action="Create">Create Return Request</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <div class="container">
+        @if (TempData["SuccessMessage"] != null)
+        {
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                @TempData["SuccessMessage"]
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        }
+        @if (TempData["ErrorMessage"] != null)
+        {
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                @TempData["ErrorMessage"]
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        }
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+
+    <footer class="border-top footer text-muted">
+        <div class="container">
+            &copy; 2025 - Morpho Inventory Management System - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+        </div>
+    </footer>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>
+

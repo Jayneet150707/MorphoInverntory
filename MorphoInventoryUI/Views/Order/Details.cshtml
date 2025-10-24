@@ -1,0 +1,83 @@
+@model MorphoInventoryUI.Models.DeviceOrderRequest
+
+@{
+    ViewData["Title"] = "Order Details";
+}
+
+<div class="row">
+    <div class="col-md-8 offset-md-2">
+        <div class="card">
+            <div class="card-header bg-info text-white d-flex justify-content-between align-items-center">
+                <h4 class="mb-0">Order #@Model.Id Details</h4>
+                <span class="badge @(Model.Status == "Approved" ? "bg-success" : Model.Status == "Pending" ? "bg-warning text-dark" : Model.Status == "Rejected" ? "bg-danger" : "bg-secondary")">
+                    @Html.DisplayFor(model => model.Status)
+                </span>
+            </div>
+            <div class="card-body">
+                <div class="row mb-3">
+                    <div class="col-md-4 fw-bold">@Html.DisplayNameFor(model => model.Creator)</div>
+                    <div class="col-md-8">@Html.DisplayFor(model => model.Creator)</div>
+                </div>
+                
+                <div class="row mb-3">
+                    <div class="col-md-4 fw-bold">@Html.DisplayNameFor(model => model.Branch)</div>
+                    <div class="col-md-8">@Html.DisplayFor(model => model.Branch)</div>
+                </div>
+                
+                <div class="row mb-3">
+                    <div class="col-md-4 fw-bold">@Html.DisplayNameFor(model => model.BranchAddress)</div>
+                    <div class="col-md-8">@Html.DisplayFor(model => model.BranchAddress)</div>
+                </div>
+                
+                <div class="row mb-3">
+                    <div class="col-md-4 fw-bold">@Html.DisplayNameFor(model => model.PersonName)</div>
+                    <div class="col-md-8">@Html.DisplayFor(model => model.PersonName)</div>
+                </div>
+                
+                <div class="row mb-3">
+                    <div class="col-md-4 fw-bold">@Html.DisplayNameFor(model => model.MobileNumber)</div>
+                    <div class="col-md-8">@Html.DisplayFor(model => model.MobileNumber)</div>
+                </div>
+                
+                <div class="row mb-3">
+                    <div class="col-md-4 fw-bold">@Html.DisplayNameFor(model => model.DeviceCount)</div>
+                    <div class="col-md-8">@Html.DisplayFor(model => model.DeviceCount)</div>
+                </div>
+                
+                <div class="row mb-3">
+                    <div class="col-md-4 fw-bold">@Html.DisplayNameFor(model => model.RequestDate)</div>
+                    <div class="col-md-8">@Html.DisplayFor(model => model.RequestDate)</div>
+                </div>
+                
+                @if (Model.Status == "Approved" || Model.Status == "Rejected")
+                {
+                    <div class="row mb-3">
+                        <div class="col-md-4 fw-bold">@Html.DisplayNameFor(model => model.ApprovedBy)</div>
+                        <div class="col-md-8">@Html.DisplayFor(model => model.ApprovedBy)</div>
+                    </div>
+                    
+                    <div class="row mb-3">
+                        <div class="col-md-4 fw-bold">@Html.DisplayNameFor(model => model.ApprovalDate)</div>
+                        <div class="col-md-8">@Html.DisplayFor(model => model.ApprovalDate)</div>
+                    </div>
+                }
+                
+                <div class="d-flex justify-content-between mt-4">
+                    <a asp-action="Index" class="btn btn-secondary">Back to List</a>
+                    
+                    <div>
+                        @if (Model.Status == "Pending")
+                        {
+                            <a asp-action="Approve" asp-route-id="@Model.Id" class="btn btn-success">Approve/Reject</a>
+                        }
+                        @if (Model.Status != "Rejected" && Model.Status != "Completed")
+                        {
+                            <a asp-action="UpdateStatus" asp-route-id="@Model.Id" class="btn btn-primary">Update Status</a>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

@@ -1,0 +1,82 @@
+@model MorphoInventoryUI.Models.Device
+
+@{
+    ViewData["Title"] = "Device Details";
+}
+
+<div class="row">
+    <div class="col-md-8 offset-md-2">
+        <div class="card">
+            <div class="card-header bg-info text-white d-flex justify-content-between align-items-center">
+                <h4 class="mb-0">Device Details</h4>
+                <span class="badge @(Model.Status == "Available" ? "bg-success" : Model.Status == "Assigned" ? "bg-primary" : "bg-secondary")">
+                    @Html.DisplayFor(model => model.Status)
+                </span>
+            </div>
+            <div class="card-body">
+                <div class="row mb-3">
+                    <div class="col-md-4 fw-bold">@Html.DisplayNameFor(model => model.SerialNumber)</div>
+                    <div class="col-md-8">@Html.DisplayFor(model => model.SerialNumber)</div>
+                </div>
+                
+                <div class="row mb-3">
+                    <div class="col-md-4 fw-bold">@Html.DisplayNameFor(model => model.Company)</div>
+                    <div class="col-md-8">@Html.DisplayFor(model => model.Company)</div>
+                </div>
+                
+                <div class="row mb-3">
+                    <div class="col-md-4 fw-bold">@Html.DisplayNameFor(model => model.DeviceType)</div>
+                    <div class="col-md-8">@Html.DisplayFor(model => model.DeviceType)</div>
+                </div>
+                
+                <div class="row mb-3">
+                    <div class="col-md-4 fw-bold">@Html.DisplayNameFor(model => model.CurrentLocation)</div>
+                    <div class="col-md-8">@Html.DisplayFor(model => model.CurrentLocation)</div>
+                </div>
+                
+                <div class="row mb-3">
+                    <div class="col-md-4 fw-bold">@Html.DisplayNameFor(model => model.CreatedDate)</div>
+                    <div class="col-md-8">@Html.DisplayFor(model => model.CreatedDate)</div>
+                </div>
+                
+                <div class="row mb-3">
+                    <div class="col-md-4 fw-bold">@Html.DisplayNameFor(model => model.CreatedBy)</div>
+                    <div class="col-md-8">@Html.DisplayFor(model => model.CreatedBy)</div>
+                </div>
+                
+                <div class="d-flex justify-content-between mt-4">
+                    <a asp-action="Index" class="btn btn-secondary">Back to List</a>
+                    
+                    <div>
+                        @if (Model.Status == "Available")
+                        {
+                            <a asp-controller="Assignment" asp-action="AssignToCoordinator" asp-route-serialNumber="@Model.SerialNumber" class="btn btn-primary">Assign to Coordinator</a>
+                        }
+                        else if (Model.Status == "Assigned" && Model.CurrentLocation == "Coordinator")
+                        {
+                            <a asp-controller="Assignment" asp-action="AssignToBranch" asp-route-serialNumber="@Model.SerialNumber" class="btn btn-success">Assign to Branch</a>
+                        }
+                        else if (Model.Status == "Assigned" && Model.CurrentLocation == "Branch")
+                        {
+                            <a asp-controller="Return" asp-action="Create" asp-route-serialNumber="@Model.SerialNumber" class="btn btn-warning">Return Device</a>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        @if (Model.Status == "Assigned")
+        {
+            <div class="card mt-4">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="mb-0">Assignment History</h5>
+                </div>
+                <div class="card-body">
+                    <p class="text-muted">Assignment history will be displayed here.</p>
+                    <!-- In a real application, you would fetch and display the assignment history -->
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
